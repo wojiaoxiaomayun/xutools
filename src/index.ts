@@ -1,1 +1,3 @@
-console.log('demo')
+import HighLight from './highlight'
+
+export {HighLight}
