@@ -27,10 +27,11 @@ const HighLight = (obj:object,particiles:Array<string> = [],options:Options | un
             if(type == 'string' || type == 'number'){
                 value += '';
                 value = value.replace(eval(regStr),`${dOptions.startTag}$1${dOptions.endTag}`);
+                return value;
             }else{
                 target[key] = HighLight(target[key],particiles,options);
+                return target[key];
             }
-            return value;
         }
     })
 }
