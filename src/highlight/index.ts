@@ -5,12 +5,21 @@ interface Options {
 }
 
 const HighLight = (obj:object,particiles:Array<string> = [],options:Options | undefined) => {
+    if(obj === undefined){
+        return obj;
+    }
     let dOptions:Options = {
         ignoreCase:options?.ignoreCase || true,
         startTag:options?.startTag || '<em>',
         endTag:options?.endTag || '</em>'
     }
-    let regStr = `/(${particiles.join('|')})/${dOptions.ignoreCase?'i':''}g`
+    let regStr = `/(${particiles.sort((a,b) => (b?.length ?? 0) - (a?.length ?? 0)).join('|')})/${dOptions.ignoreCase?'i':''}g`
+    if(typeof obj == 'string' || typeof obj == 'number'){
+        obj = obj + '';
+        obj = obj.replace(eval(regStr),`${dOptions.startTag}$1${dOptions.endTag}`);
+        return obj;
+    }
+    
     return new Proxy(obj,{
         get(target, key){
             let value = target[key];
