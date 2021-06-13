@@ -1,10 +1,10 @@
 interface Options {
-    ignoreCase:boolean,
-    startTag:string,
-    endTag:string
+    ignoreCase?:boolean,
+    startTag?:string,
+    endTag?:string
 }
 
-const HighLight = (obj:object,particiles:Array<string> = [],options:Options | undefined) => {
+const HighLight = (obj:object | string | number | undefined,particiles:Array<string> = [],options?:Options) => {
     if(obj === undefined){
         return obj;
     }
@@ -13,11 +13,10 @@ const HighLight = (obj:object,particiles:Array<string> = [],options:Options | un
         startTag:options?.startTag || '<em>',
         endTag:options?.endTag || '</em>'
     }
-    let regStr = `/(${particiles.sort((a,b) => (b?.length ?? 0) - (a?.length ?? 0)).join('|')})/${dOptions.ignoreCase?'i':''}g`
+    let reg:RegExp = new RegExp(`(${particiles.sort((a,b) => (b?.length ?? 0) - (a?.length ?? 0)).join('|')})`,`${dOptions.ignoreCase?'i':''}g`) 
+
     if(typeof obj == 'string' || typeof obj == 'number'){
-        obj = obj + '';
-        obj = obj.replace(eval(regStr),`${dOptions.startTag}$1${dOptions.endTag}`);
-        return obj;
+        return (<string>obj).replace(reg,`${dOptions.startTag}$1${dOptions.endTag}`);;
     }
     
     return new Proxy(obj,{
@@ -34,9 +33,7 @@ const HighLight = (obj:object,particiles:Array<string> = [],options:Options | un
             }
             const type = typeof value;
             if(type == 'string' || type == 'number'){
-                value += '';
-                value = value.replace(eval(regStr),`${dOptions.startTag}$1${dOptions.endTag}`);
-                return value;
+                return (<string>value).replace(reg,`${dOptions.startTag}$1${dOptions.endTag}`);
             }else{
                 target[key] = HighLight(target[key],particiles,options);
                 return target[key];

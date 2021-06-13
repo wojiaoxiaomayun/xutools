@@ -18,6 +18,19 @@ export default [
       typescript()
     ]
   },
+  {
+    input: 'src/index.ts',
+    output: {
+        name: 'dist',
+        file: pkg.iifejs,
+        format: 'iife'
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      typescript()
+    ]
+  },
   // CommonJS for Node and ES module for bundlers build
   {
     input: 'src/index.ts',

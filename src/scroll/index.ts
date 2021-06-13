@@ -18,9 +18,3 @@ export default class ScrollTool{
         this.dom.removeEventListener('scroll',this.handleScroll);
     }
 }
-
-window.onload =  () => {
-    new ScrollTool(document.getElementById("cnm"),(scrollTop,isBottom) => {
-        console.log(scrollTop,isBottom)
-    })
-}

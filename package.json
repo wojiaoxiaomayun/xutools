@@ -5,6 +5,7 @@
   "main": "dist/xutools.cjs.js",
   "module": "dist/xutools.esm.js",
   "browser": "dist/xutools.umd.js",
+  "iifejs": "dist/xutools.js",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
