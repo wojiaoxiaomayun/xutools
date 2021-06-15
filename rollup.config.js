@@ -2,7 +2,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import typescript from 'rollup-plugin-typescript'
 import pkg from './package.json'
-import postcss from 'rollup-plugin-postcss';
+import css from 'rollup-plugin-css-porter';
 
 export default [
   // UMD for browser-friendly build
@@ -16,7 +16,8 @@ export default [
     plugins: [
       resolve(),
       commonjs(),
-      typescript()
+      typescript(),
+      css()
     ]
   },
   {
@@ -30,9 +31,7 @@ export default [
       resolve(),
       commonjs(),
       typescript(),
-      postcss({
-        extensions: ['.css']
-      })
+      css()
     ]
   },
   // CommonJS for Node and ES module for bundlers build
@@ -43,8 +42,8 @@ export default [
       typescript()
     ],
     output: [
-      {  file: pkg.main, format: 'cjs' },
-      {  file: pkg.module, format: 'es' }
+      {  file: pkg.cjs, format: 'cjs' },
+      {  file: pkg.main, format: 'es' }
     ]
   }
 ]
