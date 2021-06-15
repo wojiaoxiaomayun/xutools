@@ -35,8 +35,7 @@ const HighLight = (obj:object | string | number | undefined,particiles:Array<str
             if(type == 'string' || type == 'number'){
                 return (<string>value).replace(reg,`${dOptions.startTag}$1${dOptions.endTag}`);
             }else{
-                target[key] = HighLight(target[key],particiles,options);
-                return target[key];
+                return HighLight(target[key],particiles,options);
             }
         }
     })

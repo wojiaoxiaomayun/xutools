@@ -2,6 +2,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import typescript from 'rollup-plugin-typescript'
 import pkg from './package.json'
+import postcss from 'rollup-plugin-postcss';
 
 export default [
   // UMD for browser-friendly build
@@ -28,7 +29,10 @@ export default [
     plugins: [
       resolve(),
       commonjs(),
-      typescript()
+      typescript(),
+      postcss({
+        extensions: ['.css']
+      })
     ]
   },
   // CommonJS for Node and ES module for bundlers build
