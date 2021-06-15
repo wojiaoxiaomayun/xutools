@@ -4,7 +4,7 @@ interface Options {
     endTag?:string
 }
 
-const HighLight = (obj:object | string | number | undefined,particiles:Array<string> = [],options?:Options) => {
+const HighLight:any = (obj:object | string | number | undefined,particiles:Array<string> = [],options?:Options) => {
     if(obj === undefined){
         return obj;
     }
@@ -13,7 +13,7 @@ const HighLight = (obj:object | string | number | undefined,particiles:Array<str
         startTag:options?.startTag || '<em>',
         endTag:options?.endTag || '</em>'
     }
-    let reg:RegExp = new RegExp(`(${particiles.sort((a,b) => (b?.length ?? 0) - (a?.length ?? 0)).join('|')})`,`${dOptions.ignoreCase?'i':''}g`) 
+    let reg = new RegExp(`(${particiles.sort((a,b) => (b?.length ?? 0) - (a?.length ?? 0)).map(e => e.replace(/(\(|\))/g,'\\$1')).join('|')})`,`${dOptions.ignoreCase?'i':''}g`) 
 
     if(typeof obj == 'string' || typeof obj == 'number'){
         return (<string>obj).replace(reg,`${dOptions.startTag}$1${dOptions.endTag}`);;
